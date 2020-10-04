@@ -1,17 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import "@blueprintjs/core/lib/css/blueprint.css";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+window.UrlEditor = (containerSelector, params) => {
+  console.log(containerSelector);
+  console.log(document.querySelector(containerSelector));
+  ReactDOM.render(
+    <React.StrictMode>
+      <App params={params} />
+    </React.StrictMode>,
+    document.querySelector(containerSelector)
+  );
+};
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+window.UrlEditor("#root", ["foo", "bar"]);
