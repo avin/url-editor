@@ -1,12 +1,4 @@
 import React from "react";
-import {
-  FormGroup,
-  InputGroup,
-  Card,
-  Elevation,
-  Button,
-  Intent,
-} from "@blueprintjs/core";
 
 function getUrlParams() {
   let urlParams = {};
@@ -14,7 +6,7 @@ function getUrlParams() {
     const search = window.location.search.substring(1);
     urlParams = JSON.parse(
       '{"' +
-        decodeURI(search)
+        decodeURIComponent(search)
           .replace(/"/g, '\\"')
           .replace(/&/g, '","')
           .replace(/=/g, '":"') +
@@ -66,7 +58,7 @@ export default class App extends React.Component {
   }
 
   handleSubmitForm = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     window.location.reload();
   };
 
@@ -77,25 +69,36 @@ export default class App extends React.Component {
     const keys = Array.from(new Set([...params, ...Object.keys(urlParams)]));
 
     return (
-      <Card elevation={Elevation.ONE} style={{ maxWidth: 420 }}>
-        <form onSubmit={this.handleSubmitForm}>
-          {keys.map((key) => {
-            return (
-              <FormGroup key={key} label={key} labelFor={`value-${key}`}>
-                <InputGroup
-                  id={`value-${key}`}
-                  placeholder={key}
-                  onChange={this.handleChangeField(key)}
-                  value={urlParams[key] || ""}
-                />
-              </FormGroup>
-            );
-          })}
-          <Button intent={Intent.PRIMARY} type="submit">
-            Reload
-          </Button>
-        </form>
-      </Card>
+      <form onSubmit={this.handleSubmitForm}>
+        <table>
+          <tbody>
+            {keys.map((key) => {
+              return (
+                <tr key={key}>
+                  <td>
+                    <label htmlFor={`value-${key}`}>{key}</label>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      onChange={this.handleChangeField(key)}
+                      value={urlParams[key] || ""}
+                      style={{minWidth: 300}}
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+            <tr>
+              <td colSpan={2}>
+                <button type="submit" style={{ width: "100%" }}>
+                  Reload
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
     );
   }
 }
