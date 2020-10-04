@@ -21,7 +21,9 @@ function serialize(obj) {
   var str = [];
   for (var p in obj)
     if (obj.hasOwnProperty(p)) {
-      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      if (obj[p]) {
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
     }
   return str.join("&");
 }
@@ -81,9 +83,10 @@ export default class App extends React.Component {
                   <td>
                     <input
                       type="text"
+                      id={`value-${key}`}
                       onChange={this.handleChangeField(key)}
                       value={urlParams[key] || ""}
-                      style={{minWidth: 300}}
+                      style={{ minWidth: 300 }}
                     />
                   </td>
                 </tr>
