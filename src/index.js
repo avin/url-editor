@@ -11,4 +11,4 @@ window.UrlEditor = (containerSelector, params) => {
   );
 };
 
-window.UrlEditor("#root", ["foo", "bar"]);
+// window.UrlEditor("#root", ["foo", "bar"]);
